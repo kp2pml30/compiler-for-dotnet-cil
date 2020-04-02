@@ -6,7 +6,7 @@ using Antlr4.Runtime.Misc;
 
 namespace ILTask
 {
-    public class Main
+    public class Program
     {
         public class ExecutionContext
         {
@@ -23,7 +23,7 @@ namespace ILTask
 
         private class ThrowingErrorListener : BaseErrorListener
         {
-            public override void SyntaxError([NotNull] IRecognizer recognizer, [Nullable] IToken offendingSymbol, int line, int charPositionInLine, [NotNull] string msg, [Nullable] RecognitionException e)
+            public override void SyntaxError(IRecognizer recognizer, [Nullable] IToken offendingSymbol, int line, int charPositionInLine, string msg, [Nullable] RecognitionException e)
             {
                 throw new ParseCanceledException("line " + line + ":" + charPositionInLine + " " + msg);
             }

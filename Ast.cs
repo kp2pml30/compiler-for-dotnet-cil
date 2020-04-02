@@ -1,9 +1,6 @@
-﻿using Antlr4.Runtime.Misc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ILTask
 {
@@ -43,7 +40,7 @@ namespace ILTask
         {
             public Expression expression;
 
-            public ExpressionStatement([NotNull] Expression expression)
+            public ExpressionStatement(Expression expression)
             {
                 this.expression = expression;
             }
@@ -68,7 +65,7 @@ namespace ILTask
             public String varName;
             public Expression expression;
 
-            public SetStatement([NotNull] String varName, [NotNull] Expression expression)
+            public SetStatement(String varName, Expression expression)
             {
                 this.varName = varName;
                 this.expression = expression;
@@ -82,7 +79,7 @@ namespace ILTask
             public Expression condition;
             public Block ifTrue, ifFalse;
 
-            public IfStatement([NotNull] Expression condition, [NotNull]  Block ifTrue, Block ifFalse)
+            public IfStatement(Expression condition,  Block ifTrue, Block ifFalse)
             {
                 this.condition = condition;
                 this.ifTrue = ifTrue;
@@ -101,7 +98,7 @@ namespace ILTask
                 PLS
             }
             public Operation operation;
-            public UnaryOperator([NotNull] Expression child, Operation operation)
+            public UnaryOperator(Expression child, Operation operation)
             {
                 this.child = child;
                 this.operation = operation;
@@ -130,7 +127,7 @@ namespace ILTask
                 DIV,
             }
             public Operation operation;
-            public BinaryOperator([NotNull] Expression left, [NotNull] Expression right, Operation operation)
+            public BinaryOperator(Expression left, Expression right, Operation operation)
             {
                 this.left = left;
                 this.right = right;
@@ -145,7 +142,7 @@ namespace ILTask
             public String name;
             public Expression[] arguments;
 
-            public FunctionCall([NotNull] String name, [NotNull] Expression[] arguments)
+            public FunctionCall(String name, Expression[] arguments)
             {
                 this.name = name;
                 this.arguments = arguments;
@@ -185,7 +182,7 @@ namespace ILTask
         {
             public Statement[] statements;
 
-            public Block([NotNull] Statement[] statements)
+            public Block(Statement[] statements)
             {
                 this.statements = statements;
             }
@@ -201,7 +198,7 @@ namespace ILTask
             public Block block;
             public bool hasReturn;
 
-            public FunctionDeclaration([NotNull] String name, [NotNull] String[] arguments, [NotNull] String[] locals, [NotNull] Block block, bool hasReturn = true)
+            public FunctionDeclaration(String name, String[] arguments, String[] locals, Block block, bool hasReturn = true)
             {
                 this.name = name;
                 this.arguments = arguments;
