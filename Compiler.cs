@@ -267,6 +267,12 @@ namespace ILTask
                 if (!element.hasReturn && !(element.block.statements.Last() is ReturnStatement))
                     il.Emit(OpCodes.Ret);
 
+                if (element.hasReturn && !(element.block.statements.Last() is Ast.ReturnStatement))
+                {
+                    il.Emit(OpCodes.Ldc_I8, 0L);
+                    il.Emit(OpCodes.Ret);
+                }
+
                 il = null;
                 currentFunction = null;
                 return false;

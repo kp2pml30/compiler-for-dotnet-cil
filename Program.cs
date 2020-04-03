@@ -41,7 +41,7 @@ proc Test() {
 proc PrintAddMul(x, y, z) {
     Print(x + y * z);
 }
-proc TestRet(x) {
+proc TestRet1(x) {
     if (x) {
         return;
     } else {
@@ -56,6 +56,13 @@ func TestRet2(x) {
         // return; // unreachable code
     }
     return 3; // must have
+}
+func TestRet3(x) {
+    if (x) {
+        return x;
+    } else {
+        return -x;
+    }
 }
 func PrintAndGet(p, r) {
     Print(p);
@@ -94,6 +101,11 @@ proc Main(a, b, c) {
     TestAndOr();
     EndSection();
     setMe = 999;
+
+    TestRet1(1);
+    Print(TestRet2(2));
+    Print(TestRet3(3));
+    EndSection();
 }
 ";
 
