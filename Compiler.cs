@@ -241,8 +241,8 @@ namespace ILTask
                     il.Emit(OpCodes.Stloc, index);
                     return true;
                 }
-                /// todo : search in static
-                throw new InvalidOperationException("Wrong variable name");
+                il.Emit(OpCodes.Stsfld, parent.storage.GetField(element.varName, System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public));
+                return true;
             }
             public override bool Accept(Ast.Block element, int data)
             {

@@ -1,7 +1,7 @@
 using System;
+using System.IO;
 
 using Antlr4.Runtime;
-
 using Antlr4.Runtime.Misc;
 
 namespace ILTask
@@ -11,6 +11,7 @@ namespace ILTask
         public class ExecutionContext
         {
             public static long bbb = 30;
+            public static long setMe = 15;
             public static void Print(long val)
             {
                 Console.WriteLine(val);
@@ -30,7 +31,7 @@ namespace ILTask
         }
         static void Main(string[] args)
         {
-            var parser = new LangParser(new CommonTokenStream(new LangLexer(new AntlrInputStream(@"
+            var code = @"
 func Get1() {
     return 1;
 }
@@ -92,15 +93,31 @@ proc Main(a, b, c) {
     EndSection();
     TestAndOr();
     EndSection();
+    setMe = 999;
 }
-"))));
-            parser.RemoveErrorListeners();
-            parser.AddErrorListener(new ThrowingErrorListener());
-            var tree = TreeTransformer.Transform(parser.program());
+";
+
             var compiler = new Compiler(typeof(ExecutionContext));
-            var result = compiler.Compile(tree);
-            result.GetMethod("Main").Invoke(null, new object[] { 1, 2, 3 });
-            Console.WriteLine();
+            {
+                var parser = new LangParser(new CommonTokenStream(new LangLexer(new AntlrInputStream(code))));
+                parser.RemoveErrorListeners();
+                parser.AddErrorListener(new ThrowingErrorListener());
+                var tree = TreeTransformer.Transform(parser.program());
+                var result = compiler.Compile(tree);
+                result.GetMethod("Main").Invoke(null, new object[] { 1, 2, 3 });
+            }
+            Console.WriteLine("@@@ WITH MY PARSER @@@");
+            {
+                var stream = new MemoryStream();
+                var writer = new StreamWriter(stream);
+                writer.Write(code);
+                writer.Flush();
+                stream.Position = 0;
+                var parser = new LanguageParser.SimpleParser();
+                var tree = parser.Parse(new LanguageParser.SimpleLexer(stream));
+                var result = compiler.Compile(tree);
+                result.GetMethod("Main").Invoke(null, new object[] { 1, 2, 3 });
+            }
         }
     }
 }
